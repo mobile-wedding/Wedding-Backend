@@ -6,10 +6,9 @@ services:
     container_name: mysql-db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: wedding_db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      
     ports:
       - "3306:3306"
     volumes:
@@ -17,12 +16,17 @@ services:
 
   backend:
     build: .
-    container_name: wedding-backend  # `build` 아래가 아니라 `backend`의 속성으로 위치
+    container_name: wedding-backend
     restart: always
     ports:
       - "8000:8000"
     depends_on:
       - db
+    volumes:
+      - .:/app 
+    environment:
+      - PYTHONPATH=/app  
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload  # ✅ 자동 리로딩
 
 volumes:
   mysql_data:

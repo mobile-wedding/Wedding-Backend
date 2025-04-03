@@ -4,3 +4,8 @@ pymysql
 sqlalchemy
 boto3
 python-multipart
+pymysql
+pydantic[email]
+passlib[bcrypt]
+python-dotenv
+cryptography
