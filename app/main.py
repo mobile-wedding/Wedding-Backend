@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine, initialize_database
 from app.utils.models import Base
-from app.routers import user  # 현재 구현된 라우터만 먼저 등록
+from app.routers import user 
+from app.routers import invitation # 현재 구현된 라우터만 먼저 등록
 
 # FastAPI 앱 초기화
 app = FastAPI(
@@ -37,3 +38,4 @@ initialize_database()
 
 # 라우터 등록
 app.include_router(user.router, prefix="/api/user", tags=["Users"])
+app.include_router(invitation.router, prefix="/api/invitation", tags=["Invitations"])
