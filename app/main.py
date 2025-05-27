@@ -4,7 +4,7 @@ from app.database import engine, initialize_database
 from app.utils.models import Base
 from app.routers import user 
 from app.routers import invitation # 현재 구현된 라우터만 먼저 등록
-
+from app.routers import photo
 # FastAPI 앱 초기화
 app = FastAPI(
     title="모바일 청첩장 API",
@@ -33,9 +33,9 @@ app.add_middleware(
 )
 
 # DB 테이블 생성 및 초기화
-Base.metadata.create_all(bind=engine)
 initialize_database()
 
 # 라우터 등록
 app.include_router(user.router, prefix="/api/user", tags=["Users"])
 app.include_router(invitation.router, prefix="/api/invitation", tags=["Invitations"])
+app.include_router(photo.router, prefix="/api")
