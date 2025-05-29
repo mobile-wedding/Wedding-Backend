@@ -12,3 +12,8 @@ cryptography
 boto3
 python-multipart
 dotenv
+torch
+openai
+Pillow
+git+https://github.com/openai/CLIP.git
+requests

@@ -1,6 +1,9 @@
 # Python 3.9 이미지 사용
 FROM python:3.12.6-slim
 
+# pip install 전에 git 설치 추가
+RUN apt-get update && apt-get install -y git
+
 # 작업 디렉토리 생성 및 설정
 WORKDIR /app
 
