@@ -28,3 +28,31 @@ def get_style_tag_from_gpt(captions: List[str]) -> str:
     style_tag = response.choices[0].message.content.strip()
     print(f"[GPT Response] style_tag: {style_tag}")  # ✅ 결과 확인용 로그
     return style_tag
+
+def get_photo_order_from_gpt(photo_data: list[dict]) -> list[int]:
+    prompt_lines = ["다음 사진들을 청첩장의 자연스러운 순서로 정렬해줘.\nID 순서만 콤마로 반환해줘.\n"]
+
+    for photo in photo_data:
+        prompt_lines.append(f"{photo['id']}. 스타일: {photo['style']}, 설명: {photo['caption']}")
+    
+    prompt_lines.append("\n배치 순서:")
+
+    prompt = "\n".join(prompt_lines)
+
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": "당신은 청첩장 구성 전문가입니다."},
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=50,
+        temperature=0.7
+    )
+
+    result = response.choices[0].message.content.strip()
+    print(f"[GPT Response] photo order: {result}")
+    
+    try:
+        return list(map(int, result.replace("[", "").replace("]", "").split(",")))
+    except Exception:
+        return []

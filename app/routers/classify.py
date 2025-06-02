@@ -5,7 +5,7 @@ from app.database import get_db
 from app.service.classify import classify_photos_with_clip_and_gpt
 from app.crud import photo as crud_photo
 
-router = APIRouter(prefix="/photo", tags=["Photo"])
+router = APIRouter()
 
 @router.post("/classify/{invitation_id}")
 def classify_photos(invitation_id: int, db: Session = Depends(get_db)):

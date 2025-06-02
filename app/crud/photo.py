@@ -35,3 +35,9 @@ def update_photo_style(db: Session, photo_id: int, style_tag: str):
 
 def get_photos_by_invitation(db: Session, invitation_id: int):
     return db.query(Photo).filter(Photo.invitation_id == invitation_id).all()
+
+def update_photo_order(db: Session, photo_id: int, order: int):
+    photo = db.query(Photo).filter(Photo.id == photo_id).first()
+    if photo:
+        photo.order = order
+        db.commit()
