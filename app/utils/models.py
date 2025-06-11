@@ -16,9 +16,11 @@ class User(Base):
 
     invitations = relationship("Invitation", back_populates="user", cascade="all, delete-orphan")
 
+
 # 💌 청첩장 모델
 class Invitation(Base):
     __tablename__ = "invitations"
+    __table_args__ = {"extend_existing": True}  # 중복 정의 방지
 
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
@@ -27,6 +29,7 @@ class Invitation(Base):
     wedding_date = Column(DateTime, nullable=False)
     location = Column(String(255))
     message = Column(String(1000))
+    security_code = Column(String(6), nullable=False)  # ✅ 보안코드 추가
 
     user = relationship("User", back_populates="invitations")
     photos = relationship("Photo", back_populates="invitation", cascade="all, delete-orphan")

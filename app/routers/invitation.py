@@ -1,4 +1,3 @@
-# app/routers/invitation.py
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
@@ -30,3 +29,15 @@ def delete_invitation(invitation_id: int, db: Session = Depends(get_db)):
     if not result:
         raise HTTPException(status_code=404, detail="Invitation not found")
     return {"message": "Invitation deleted successfully"}
+
+# ✅ 5. 보안코드 검증 API
+@router.get("/verify/{invitation_id}/{code}")
+def verify_security_code(invitation_id: int, code: str, db: Session = Depends(get_db)):
+    invitation = crud_invitation.find_invitation(db, invitation_id)
+    if not invitation:
+        raise HTTPException(status_code=404, detail="Invitation not found")
+    
+    if invitation.security_code != code:
+        raise HTTPException(status_code=403, detail="Invalid security code")
+    
+    return {"message": "Security code verified"}

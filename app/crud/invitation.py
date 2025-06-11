@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from app.utils.models import Invitation
 from app.schemas.invitation import InvitationCreate, InvitationUpdate
 from fastapi import HTTPException
+from app.utils.security import generate_security_code
 
 def create_invitation(db: Session, user_id: int, invitation: InvitationCreate):
     new_invite = Invitation(
@@ -10,7 +11,8 @@ def create_invitation(db: Session, user_id: int, invitation: InvitationCreate):
         bride_name=invitation.bride_name,
         wedding_date=invitation.wedding_date,
         location=invitation.location,
-        message=invitation.message
+        message=invitation.message,
+        security_code=generate_security_code()
     )
     db.add(new_invite)
     db.commit()
