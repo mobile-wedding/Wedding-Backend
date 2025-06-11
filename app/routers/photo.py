@@ -46,3 +46,7 @@ def delete_photo(photo_id: int, db: Session = Depends(get_db)):
         return {"message": "Photo deleted successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@router.get("/{invitation_id}", response_model=List[PhotoResponse])
+def get_photos_by_invitation(invitation_id: int, db: Session = Depends(get_db)):
+    return crud_photo.get_photos_by_invitation_id(db, invitation_id)
