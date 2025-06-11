@@ -14,6 +14,12 @@ class InvitationResponse(BaseModel):
     groom_name: str
     bride_name: str
     wedding_date: datetime
+    location: str
+    message: str
+    security_code: str  
+    
+    class Config:
+        from_attributes = True  
 
 class InvitationUpdate(BaseModel):
     groom_name: Optional[str] = None
