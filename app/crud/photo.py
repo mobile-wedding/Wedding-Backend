@@ -41,3 +41,6 @@ def update_photo_order(db: Session, photo_id: int, order: int):
     if photo:
         photo.order = order
         db.commit()
+
+def get_photos_by_invitation_id(db: Session, invitation_id: int):
+    return db.query(Photo).filter(Photo.invitation_id == invitation_id).all()
