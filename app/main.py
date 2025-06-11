@@ -7,6 +7,7 @@ from app.routers import invitation # 현재 구현된 라우터만 먼저 등록
 from app.routers import photo
 from app.routers import classify
 from app.routers import layout
+from app.routers import anniversary
 
 # FastAPI 앱 초기화
 app = FastAPI(
@@ -44,3 +45,4 @@ app.include_router(invitation.router, prefix="/api/invitation", tags=["Invitatio
 app.include_router(photo.router, prefix="/api/photo", tags=["Photo"])
 app.include_router(classify.router, prefix="/api/photo", tags=["Photo-Classification"])
 app.include_router(layout.router, prefix="/api/photo", tags=["Photo-Layout"])
+app.include_router(anniversary.router, prefix="/api/anniversary", tags=["Anniversary"])

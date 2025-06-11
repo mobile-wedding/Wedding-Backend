@@ -1,25 +1,24 @@
 from pydantic import BaseModel
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
-class InvitationCreate(BaseModel):
+class InvitationBase(BaseModel):
     groom_name: str
     bride_name: str
     wedding_date: datetime
     location: str
     message: str
 
-class InvitationResponse(BaseModel):
+class InvitationCreate(InvitationBase):
+    pass
+
+class InvitationResponse(InvitationBase):
     id: int
-    groom_name: str
-    bride_name: str
-    wedding_date: datetime
-    location: str
-    message: str
-    security_code: str  
+    security_code: str
+    user_id: int
     
     class Config:
-        from_attributes = True  
+        from_attributes = True
 
 class InvitationUpdate(BaseModel):
     groom_name: Optional[str] = None

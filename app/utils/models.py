@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, Date
 from sqlalchemy.orm import relationship, declarative_base
 from datetime import datetime
+
 
 Base = declarative_base()
 
@@ -32,6 +33,7 @@ class Invitation(Base):
     security_code = Column(String(6), nullable=False)  # ✅ 보안코드 추가
 
     user = relationship("User", back_populates="invitations")
+    anniversaries = relationship("Anniversary", back_populates="invitation")
     photos = relationship("Photo", back_populates="invitation", cascade="all, delete-orphan")
     guests = relationship("Guest", back_populates="invitation", cascade="all, delete-orphan")
 
@@ -60,3 +62,13 @@ class Guest(Base):
     message = Column(String(1000))
 
     invitation = relationship("Invitation", back_populates="guests")
+
+class Anniversary(Base):
+    __tablename__ = "anniversaries"
+
+    id = Column(Integer, primary_key=True, index=True)
+    invitation_id = Column(Integer, ForeignKey("invitations.id"), nullable=False)
+    anniversary_date = Column(Date, nullable=False)
+    description = Column(String(255), nullable=True)
+
+    invitation = relationship("Invitation", back_populates="anniversaries")
