@@ -15,6 +15,8 @@ def create_invitation(db: Session, user_id: int, invitation: InvitationCreate):
             wedding_date=invitation.wedding_date,
             location=invitation.location,
             message=invitation.message,
+            bank_name=invitation.bank_name,
+            account=invitation.account,
             security_code=generate_security_code()
         )
         db.add(new_invite)

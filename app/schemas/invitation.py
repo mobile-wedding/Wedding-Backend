@@ -8,6 +8,8 @@ class InvitationBase(BaseModel):
     wedding_date: datetime
     location: str
     message: str
+    bank_name: Optional[str] = None
+    account: Optional[str] = None
 
 class InvitationCreate(InvitationBase):
     pass

@@ -30,7 +30,9 @@ class Invitation(Base):
     wedding_date = Column(DateTime, nullable=False)
     location = Column(String(255))
     message = Column(String(1000))
-    security_code = Column(String(6), nullable=False)  # ✅ 보안코드 추가
+    bank_name = Column(String(50), nullable=True)
+    account = Column(String(100), nullable=True)  
+    security_code = Column(String(6), nullable=False)  
 
     user = relationship("User", back_populates="invitations")
     anniversaries = relationship("Anniversary", back_populates="invitation")
